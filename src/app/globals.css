@@ -1,0 +1,830 @@
+@import "tailwindcss";
+
+:root {
+  /* Cool light gray canvas — no yellow/tan undertone, not cream. Never a
+     single flat paper value. */
+  --paper: #e9ebee;
+  --paper-warm: #edeef3;
+  --paper-cool: #e3e7e6;
+  --paper-raised: #f2f3f6;
+
+  /* Primary text is deep indigo, not black or brown — the dominant
+     relationship in this palette, giving the light canvas real weight.
+     Secondary text is derived from that same hue, never washed-out gray. */
+  --ink: #1f2a44;
+  --ink-soft: #3f4a63;
+  --ink-faint: #6b7288;
+  --rule: #1f2a44;
+  --rule-soft: #b7ad8f;
+
+  /* Vermillion action color and gold-leaf inscription accent — both carry
+     real regions (emblem, dateline band, headlines' glow), not a thin
+     sliver. Reserved for the emblem, wayfinding, and interactive controls;
+     never a verdict color. */
+  --ink-accent: #c22a1e;
+  --ink-accent-strong: #931d14;
+  --ink-accent-2: #1d6b5f;
+  --ink-accent-2-strong: #144e46;
+  --ink-accent-3: #1d6b5f;
+
+  /* Marks stay achromatic — carving depth carries the state, never a hue */
+  --ink-stamp: #2a3350;
+
+  --focus-ring: #c22a1e;
+
+  --font-bn: var(--font-bn-serif), "Noto Serif Bengali", serif;
+  --font-en: var(--font-en-serif), "PT Serif", Georgia, serif;
+  --font-mono: var(--font-mono), "JetBrains Mono", ui-monospace, monospace;
+}
+
+@theme inline {
+  --color-background: var(--paper);
+  --color-foreground: var(--ink);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #171310;
+    --paper-warm: #1d1712;
+    --paper-cool: #141310;
+    --paper-raised: #221b14;
+    --ink: #ece2c8;
+    --ink-soft: #c7bb9c;
+    --ink-faint: #8f8368;
+    --rule: #ece2c8;
+    --rule-soft: #4a4030;
+    --ink-accent: #d8362a;
+    --ink-accent-strong: #ee7b70;
+    --ink-accent-2: #3ea892;
+    --ink-accent-2-strong: #63c2ab;
+    --ink-accent-3: #3ea892;
+    --ink-stamp: #d8cfb4;
+  }
+}
+
+* {
+  box-decoration-break: clone;
+}
+
+html,
+body {
+  color: var(--ink);
+}
+
+body {
+  position: relative;
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(ellipse 60% 50% at 4% 0%, var(--paper-warm), transparent 65%),
+    radial-gradient(ellipse 55% 45% at 100% 100%, var(--paper-cool), transparent 65%);
+  background-attachment: fixed;
+}
+
+/* Paper grain — fibrous texture so newsprint is felt, not asserted */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.55;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.09  0 0 0 0 0.08  0 0 0 0 0.06  0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-color-scheme: dark) {
+  body::before {
+    opacity: 0.4;
+    mix-blend-mode: screen;
+  }
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+body {
+  font-family: var(--font-bn);
+}
+
+[data-lang="en"] {
+  font-family: var(--font-en);
+}
+
+::selection {
+  background: var(--ink-accent);
+  color: var(--paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+a {
+  color: inherit;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Masthead — nameplate + dateline                                         */
+/* ---------------------------------------------------------------------- */
+
+.masthead {
+  padding-top: clamp(1.5rem, 4vw, 3rem);
+}
+
+.masthead-rule-top {
+  border-top: 4px solid var(--rule);
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 4vw, 3rem);
+}
+
+.masthead-rule-bottom {
+  border-top: 1px solid var(--rule);
+  max-width: 76rem;
+  margin: 0.5rem auto 0;
+  padding: 0 clamp(1.25rem, 4vw, 3rem);
+}
+
+.masthead-inner {
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 0.9rem clamp(1.25rem, 4vw, 3rem) 0.5rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.masthead-title-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  text-decoration: none;
+}
+
+.masthead-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+}
+
+.masthead-title-bn {
+  font-family: var(--font-bn);
+  font-weight: 700;
+  font-size: clamp(2rem, 5.6vw, 3.75rem);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-shadow: 0 0 22px rgba(29, 107, 95, 0.2);
+}
+
+.masthead-title-en {
+  font-family: var(--font-en);
+  font-style: italic;
+  font-size: clamp(0.85rem, 1.6vw, 1.05rem);
+  color: var(--ink-soft);
+}
+
+.masthead-right {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.masthead-stamp-wrap {
+  position: relative;
+  z-index: 2;
+}
+
+.masthead-stamp-wrap svg {
+  width: clamp(80px, 12vw, 128px);
+  height: auto;
+  display: block;
+}
+
+/* Dateline row — edition line under the nameplate rule */
+
+.masthead-dateline {
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 0.55rem clamp(1.25rem, 4vw, 3rem) 0.7rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--paper);
+  text-transform: uppercase;
+  background: var(--ink-accent-2);
+}
+
+.lang-toggle {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+  border: 1px solid var(--rule);
+  padding: 0.35rem 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--paper-raised);
+  cursor: pointer;
+  color: var(--ink-soft);
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.lang-toggle:hover {
+  border-color: var(--ink-accent);
+}
+
+.lang-toggle-active {
+  color: var(--ink-accent);
+  font-weight: 700;
+}
+
+.lang-toggle-sep {
+  color: var(--ink-faint);
+}
+
+.masthead-nav {
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 0.55rem clamp(1.25rem, 4vw, 3rem) 0.85rem;
+  overflow-x: auto;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.masthead-nav ol {
+  display: flex;
+  gap: clamp(1rem, 2.4vw, 1.9rem);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.nav-link {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  color: var(--ink-soft);
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid transparent;
+}
+
+.nav-link:hover {
+  border-bottom-color: var(--rule-soft);
+}
+
+.nav-link-active {
+  color: var(--ink);
+  border-bottom-color: var(--ink-accent);
+}
+
+.nav-number {
+  font-family: var(--font-mono);
+  color: var(--ink-faint);
+  margin-right: 0.35rem;
+}
+
+.nav-link-active .nav-number {
+  color: var(--ink-accent);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Page shell                                                              */
+/* ---------------------------------------------------------------------- */
+
+.page-main {
+  max-width: 76rem;
+  margin: 0 auto;
+  width: 100%;
+  padding: clamp(1.75rem, 4vw, 3rem) clamp(1.25rem, 4vw, 3rem) clamp(3rem, 6vw, 5rem);
+  flex: 1;
+}
+
+.page-header {
+  position: relative;
+  margin-bottom: clamp(2rem, 4.5vw, 3rem);
+  padding-bottom: 1.25rem;
+  padding-left: 1.75rem;
+  border-bottom: 3px double var(--rule);
+}
+
+/* Wreath corner mark — echoes the wreath-laying convention, one per section */
+.page-header::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.3rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  border: 2px solid var(--ink-accent);
+  border-radius: 50%;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  transform: rotate(-45deg);
+}
+
+.page-header-notif {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.55rem;
+}
+
+.page-header-title {
+  font-family: var(--font-bn);
+  font-weight: 700;
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  line-height: 1.0;
+  letter-spacing: -0.01em;
+  max-width: 20ch;
+  color: var(--ink);
+  text-shadow: 0 0 26px rgba(29, 107, 95, 0.18);
+}
+
+[data-lang="en"] .page-header-title {
+  font-family: var(--font-en);
+}
+
+.page-header-dek {
+  margin-top: 0.75rem;
+  font-family: var(--font-en);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+  max-width: 60ch;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Front page (home) — lead + sidebar grid                                 */
+/* ---------------------------------------------------------------------- */
+
+.front-page {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: clamp(2rem, 4vw, 3.5rem);
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .front-page {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lead-column {
+  border-right: 1px solid var(--rule-soft);
+  padding-right: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+@media (max-width: 860px) {
+  .lead-column {
+    border-right: none;
+    padding-right: 0;
+  }
+}
+
+.lead-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  display: block;
+  margin-bottom: 0.6rem;
+}
+
+.lead-notice {
+  font-family: var(--font-bn);
+  font-size: clamp(1.15rem, 2.4vw, 1.55rem);
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+[data-lang="en"] .lead-notice {
+  font-family: var(--font-en);
+}
+
+.pull-quote {
+  margin: clamp(2rem, 4vw, 3rem) 0;
+  padding-top: 1.25rem;
+  border-top: 3px solid var(--ink-accent);
+}
+
+.pull-quote-figure {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: clamp(3rem, 9vw, 5.5rem);
+  line-height: 1;
+  color: var(--ink-accent);
+  letter-spacing: -0.02em;
+}
+
+.pull-quote-caption {
+  margin-top: 0.6rem;
+  font-family: var(--font-bn);
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  line-height: 1.5;
+  max-width: 38ch;
+}
+
+[data-lang="en"] .pull-quote-caption {
+  font-family: var(--font-en);
+}
+
+.sidebar-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-accent-3);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--ink-accent-3);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Edition index (home sidebar)                                            */
+/* ---------------------------------------------------------------------- */
+
+.gazette-index {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.gazette-index-item + .gazette-index-item {
+  border-top: 1px solid var(--rule-soft);
+}
+
+.gazette-index-link {
+  display: grid;
+  grid-template-columns: 2.25rem 1fr;
+  gap: 0.85rem;
+  padding: clamp(0.9rem, 2vw, 1.25rem) 0.1rem;
+  text-decoration: none;
+  color: var(--ink);
+  transition: background 0.15s ease;
+  position: relative;
+}
+
+.gazette-index-link::before {
+  content: "";
+  position: absolute;
+  left: -0.75rem;
+  top: 0.6rem;
+  bottom: 0.6rem;
+  width: 3px;
+  background: var(--ink-accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.2s ease;
+}
+
+.gazette-index-item:nth-child(3n+2) .gazette-index-link::before {
+  background: var(--ink-accent-2);
+}
+
+.gazette-index-item:nth-child(3n) .gazette-index-link::before {
+  background: var(--ink-accent-3);
+}
+
+.gazette-index-link:hover::before {
+  transform: scaleY(1);
+}
+
+.gazette-index-number {
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  color: var(--ink-faint);
+}
+
+.gazette-index-link:hover .gazette-index-number {
+  color: var(--ink-accent);
+}
+
+.gazette-index-item:nth-child(3n+2) .gazette-index-link:hover .gazette-index-number {
+  color: var(--ink-accent-2);
+}
+
+.gazette-index-item:nth-child(3n) .gazette-index-link:hover .gazette-index-number {
+  color: var(--ink-accent-3);
+}
+
+.gazette-index-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.gazette-index-title {
+  font-family: var(--font-bn);
+  font-weight: 700;
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  line-height: 1.25;
+}
+
+[data-lang="en"] .gazette-index-title {
+  font-family: var(--font-en);
+}
+
+.gazette-index-dek {
+  font-family: var(--font-en);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+.gazette-index-arrow {
+  display: none;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Clauses — real column density on section pages                          */
+/* ---------------------------------------------------------------------- */
+
+.clause-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  column-gap: clamp(2rem, 3.5vw, 3rem);
+}
+
+@media (min-width: 900px) {
+  .clause-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.clause {
+  display: block;
+  padding: clamp(1.35rem, 2.6vw, 1.85rem) 0;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.clause-list > .clause:nth-child(-n + 2) {
+  border-top: 2px solid var(--rule);
+}
+
+@media (max-width: 899px) {
+  .clause-list > .clause:nth-child(n + 2) {
+    border-top: 1px solid var(--rule-soft);
+  }
+}
+
+.clause-video-thumb {
+  position: relative;
+  display: block;
+  margin-bottom: 0.75rem;
+  border: 1px solid var(--rule-soft);
+  overflow: hidden;
+  background: var(--ink);
+}
+
+.clause-video-thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  opacity: 0.92;
+  transition: opacity 0.15s ease, transform 0.3s ease;
+}
+
+.clause-video-thumb:hover img {
+  opacity: 1;
+  transform: scale(1.02);
+}
+
+.clause-video-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clause-number {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--ink-faint);
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.clause-body {
+  max-width: 100%;
+}
+
+.clause-title {
+  font-family: var(--font-bn);
+  font-weight: 700;
+  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  line-height: 1.28;
+  margin-bottom: 0.35rem;
+}
+
+[data-lang="en"] .clause-title {
+  font-family: var(--font-en);
+}
+
+.clause-byline {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.55rem;
+}
+
+.clause-text {
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+.clause-title-link {
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 1px solid var(--rule-soft);
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.clause-title-link:hover {
+  color: var(--ink-accent);
+  border-color: var(--ink-accent);
+}
+
+.clause-title-mark {
+  font-family: var(--font-mono);
+  font-size: 0.62em;
+  color: var(--ink-accent);
+  margin-left: 0.3em;
+  display: inline-block;
+}
+
+.clause-meta {
+  margin-top: 0.85rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.clause-crossref {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  border-bottom: 1px dotted var(--rule-soft);
+  text-decoration: none;
+}
+
+.clause-crossref:hover {
+  border-bottom-color: var(--ink-accent);
+  color: var(--ink-accent);
+}
+
+.clause-crossref-note {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-faint);
+}
+
+/* Per-clause marks ---------------------------------------------------------
+   Carving depth, not color: verified is a deep-cut solid inscription mark,
+   disputed a shallow outline-only carving, referred a chalk-marked dashed
+   outline (not yet carved). The one full medallion lives once per page in
+   .aggregate-stamp. */
+
+.mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  color: var(--ink-stamp);
+}
+
+.mark-glyph {
+  display: inline-block;
+  width: 0.95rem;
+  height: 0.95rem;
+  border: 1.5px solid var(--ink-stamp);
+  flex-shrink: 0;
+}
+
+.mark-verified .mark-glyph {
+  background: var(--ink-stamp);
+}
+
+.mark-disputed .mark-glyph {
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--ink-stamp),
+    var(--ink-stamp) 1.5px,
+    transparent 1.5px,
+    transparent 4px
+  );
+}
+
+.mark-referred .mark-glyph {
+  border-style: dashed;
+}
+
+/* Aggregate stamp — one authored illustration per page, registration-marked */
+
+.aggregate-stamp {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  margin-bottom: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+.aggregate-stamp-label {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  max-width: 32ch;
+  line-height: 1.6;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Pending / empty state                                                   */
+/* ---------------------------------------------------------------------- */
+
+.pending-block {
+  border: 1px dashed var(--rule-soft);
+  padding: clamp(2rem, 5vw, 3rem);
+  text-align: center;
+  color: var(--ink-faint);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  line-height: 1.8;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Footer                                                                   */
+/* ---------------------------------------------------------------------- */
+
+.site-footer {
+  border-top: 4px solid var(--rule);
+  padding: clamp(1.5rem, 3vw, 2.25rem) clamp(1.25rem, 4vw, 3rem);
+}
+
+.site-footer-inner {
+  max-width: 76rem;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Motion — one authored moment: clauses settle in on load, orchestrated   */
+/* ---------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .clause,
+  .gazette-index-item {
+    animation: clause-settle 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
+@keyframes clause-settle {
+  from {
+    opacity: 0;
+    transform: translateY(0.4rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
