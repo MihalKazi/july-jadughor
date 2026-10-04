@@ -37,3 +37,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 # july-jadughor
 
 **Live site:** https://july-jadughor.vercel.app
+
