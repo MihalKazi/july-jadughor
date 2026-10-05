@@ -1,6 +1,7 @@
 "use client";
 
 import { Masthead } from "@/components/Masthead";
+import { PhotoHero } from "@/components/PhotoHero";
 import { SiteFooter } from "@/components/SiteFooter";
 import { GazetteIndex } from "@/components/GazetteIndex";
 import { NOTICE, verificationClauses } from "@/lib/content";
@@ -13,6 +14,7 @@ export default function Home() {
 
   return (
     <>
+      <PhotoHero />
       <Masthead active="" />
       <main className="page-main">
         <div className="front-page">
