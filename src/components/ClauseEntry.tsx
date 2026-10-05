@@ -3,6 +3,7 @@
 import Image from "next/image";
 import type { Clause, Citation } from "@/lib/content";
 import { useLanguage } from "@/lib/language-context";
+import { useEffect, useRef, useState } from "react";
 import { Stamp } from "./Stamp";
 
 export function ClauseEntry({
@@ -17,12 +18,30 @@ export function ClauseEntry({
   crossRefHref?: string;
 }) {
   const { lang } = useLanguage();
+  const ref = useRef<HTMLElement>(null);
+  const [visible, setVisible] = useState(false);
   const primaryCitation = clause.citationIds?.length
     ? citations.find((c) => c.id === clause.citationIds![0])
     : undefined;
 
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.15 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <article className="clause" id={clause.id}>
+    <article ref={ref} className={`clause${visible ? " is-visible" : ""}`} id={clause.id}>
       <span className="clause-number tabular">{clause.number}</span>
       <div className="clause-body">
         {clause.videoId && primaryCitation && (

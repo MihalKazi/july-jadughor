@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Noto_Serif_Bengali, PT_Serif, JetBrains_Mono } from "next/font/google";
+import { Noto_Serif_Bengali, PT_Serif, JetBrains_Mono, Manrope, Noto_Sans_Bengali } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/lib/language-context";
 
@@ -22,6 +22,18 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500"],
 });
 
+const heroEn = Manrope({
+  variable: "--font-hero-en",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const heroBn = Noto_Sans_Bengali({
+  variable: "--font-hero-bn",
+  subsets: ["bengali"],
+  weight: ["400", "500", "600", "700"],
+});
+
 export const metadata: Metadata = {
   title: "জুলাই গণঅভ্যুত্থান স্মৃতি জাদুঘর — Digital Archive",
   description:
@@ -32,7 +44,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="bn"
-      className={`${notoSerifBengali.variable} ${ptSerif.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${notoSerifBengali.variable} ${ptSerif.variable} ${jetbrainsMono.variable} ${heroEn.variable} ${heroBn.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <LanguageProvider>{children}</LanguageProvider>

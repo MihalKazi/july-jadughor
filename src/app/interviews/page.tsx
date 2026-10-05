@@ -12,7 +12,7 @@ export default function InterviewsPage() {
     <>
       <Masthead active="interviews" />
       <main className="page-main">
-        <PageHeader notifNumber={meta.number} title={meta.title} dek={meta.dek} />
+        <PageHeader notifNumber={meta.number} title={meta.title} dek={meta.dek} image="/hero-4.jpg" />
         <div className="clause-list">
           {interviewClauses.map((c) => (
             <ClauseEntry key={c.id} clause={c} citations={interviewCitations} />

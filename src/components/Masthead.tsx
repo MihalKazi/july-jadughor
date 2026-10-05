@@ -1,72 +1,93 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { SECTIONS } from "@/lib/content";
 import { useLanguage } from "@/lib/language-context";
-import { MonumentMark } from "./MonumentMark";
+import { InkTrail } from "./InkTrail";
+import { ReadingProgress } from "./ReadingProgress";
 
 export function Masthead({ active }: { active?: string }) {
   const { lang, toggle } = useLanguage();
+  const [open, setOpen] = useState(false);
+  const sections = SECTIONS.filter((s) => s.slug);
 
   return (
-    <header className="masthead">
-      <div className="masthead-rule-top" aria-hidden="true" />
-      <div className="masthead-inner">
-        <Link href="/" className="masthead-title-block">
-          <span className="masthead-title-bn">
+    <header className="site-header">
+      <InkTrail />
+      <ReadingProgress />
+      <div className="site-bar">
+        <Link href="/" className="hero-brand">
+          <span className="hero-brand-mark" aria-hidden="true" />
+          <span className="hero-brand-name" lang="bn">
             জুলাই গণঅভ্যুত্থান স্মৃতি জাদুঘর
-          </span>
-          <span className="masthead-title-en">
-            July Uprising Memorial Museum — Digital Archive
           </span>
         </Link>
 
-        <div className="masthead-right">
+        <nav className="site-nav-desk" aria-label="Sections">
+          <ol>
+            {sections.map((s) => {
+              const isActive = active === s.slug;
+              return (
+                <li key={s.slug}>
+                  <Link
+                    href={`/${s.slug}`}
+                    className={isActive ? "is-active" : undefined}
+                    aria-current={isActive ? "page" : undefined}
+                    lang={lang}
+                  >
+                    <span className="site-nav-num">{s.number}</span>
+                    {s.short[lang]}
+                  </Link>
+                </li>
+              );
+            })}
+          </ol>
+        </nav>
+
+        <div className="site-bar-tools">
+          <button type="button" onClick={toggle} className="hero-lang" aria-label="Toggle language">
+            <span className={lang === "bn" ? "hero-lang-on" : undefined}>বাং</span>
+            <span className="hero-lang-sep">/</span>
+            <span className={lang === "en" ? "hero-lang-on" : undefined}>EN</span>
+          </button>
           <button
             type="button"
-            onClick={toggle}
-            className="lang-toggle"
-            aria-label="Toggle language"
+            className="site-menu-btn"
+            aria-expanded={open}
+            aria-controls="site-menu"
+            onClick={() => setOpen((v) => !v)}
           >
-            <span className={lang === "bn" ? "lang-toggle-active" : ""}>বাং</span>
-            <span className="lang-toggle-sep">/</span>
-            <span className={lang === "en" ? "lang-toggle-active" : ""}>EN</span>
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+            <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
           </button>
-          <div className="masthead-stamp-wrap">
-            <MonumentMark size={112} />
-          </div>
         </div>
       </div>
-      <div className="masthead-rule-bottom" aria-hidden="true" />
 
-      <div className="masthead-dateline">
-        <span>
-          {lang === "bn" ? "সংরক্ষণাগার সংস্করণ · ০১/২০২৫" : "Archive edition · 01/2025"}
-        </span>
-        <span>
-          {lang === "bn" ? "স্বাধীন সংকলন" : "Independent compilation"}
-        </span>
-      </div>
-
-      <nav className="masthead-nav" aria-label="Sections">
-        <ol>
-          {SECTIONS.map((s) => {
-            const href = s.slug ? `/${s.slug}` : "/";
-            const isActive = active === s.slug;
-            return (
-              <li key={s.slug || "home"}>
-                <Link
-                  href={href}
-                  className={isActive ? "nav-link nav-link-active" : "nav-link"}
-                >
-                  <span className="nav-number">{s.number}</span>
-                  {s.title[lang]}
-                </Link>
-              </li>
-            );
-          })}
-        </ol>
-      </nav>
+      {open && (
+        <nav id="site-menu" className="site-menu" aria-label="Sections">
+          <ol>
+            {sections.map((s) => {
+              const isActive = active === s.slug;
+              return (
+                <li key={s.slug}>
+                  <Link
+                    href={`/${s.slug}`}
+                    className={isActive ? "is-active" : undefined}
+                    aria-current={isActive ? "page" : undefined}
+                    lang={lang}
+                    onClick={() => setOpen(false)}
+                  >
+                    <span className="site-nav-num">{s.number}</span>
+                    <span>{s.title[lang]}</span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ol>
+        </nav>
+      )}
     </header>
   );
 }

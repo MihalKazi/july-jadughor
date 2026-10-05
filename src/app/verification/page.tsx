@@ -3,8 +3,7 @@
 import { Masthead } from "@/components/Masthead";
 import { SiteFooter } from "@/components/SiteFooter";
 import { PageHeader } from "@/components/PageHeader";
-import { ClauseEntry } from "@/components/ClauseEntry";
-import { AggregateStamp } from "@/components/AggregateStamp";
+import { VerificationFilter } from "@/components/VerificationFilter";
 import {
   SECTIONS,
   verificationClauses,
@@ -16,41 +15,26 @@ import { useLanguage } from "@/lib/language-context";
 export default function VerificationPage() {
   const meta = SECTIONS.find((s) => s.slug === "verification")!;
   const { lang } = useLanguage();
-  const disputed = verificationClauses.filter((c) => c.stamp === "disputed").length;
+
+  const resolveCrossRef = (id: string) => {
+    const target = controversyClauses.find((v) => v.id === id);
+    if (!target) return undefined;
+    return {
+      label: `${target.number} ${target.title[lang]}`,
+      href: `/controversies#${target.id}`,
+    };
+  };
 
   return (
     <>
       <Masthead active="verification" />
       <main className="page-main">
-        <PageHeader notifNumber={meta.number} title={meta.title} dek={meta.dek} />
-        <AggregateStamp
-          count={disputed}
-          of={verificationClauses.length}
-          label={{
-            bn: "টি প্রচারিত দাবি যাচাইয়ে ভুল বা বিভ্রান্তিকর প্রমাণিত হয়েছে",
-            en: "of these circulated claims were found false or misleading on verification",
-          }}
+        <PageHeader notifNumber={meta.number} title={meta.title} dek={meta.dek} image="/hero-3.jpg" />
+        <VerificationFilter
+          clauses={verificationClauses}
+          citations={verificationCitations}
+          resolveCrossRef={resolveCrossRef}
         />
-        <div className="clause-list">
-          {verificationClauses.map((c) => {
-            const target = c.crossRef
-              ? controversyClauses.find((v) => v.id === c.crossRef)
-              : undefined;
-            const label = target
-              ? `${target.number} ${target.title[lang]}`
-              : undefined;
-            const href = target ? `/controversies#${target.id}` : undefined;
-            return (
-              <ClauseEntry
-                key={c.id}
-                clause={c}
-                citations={verificationCitations}
-                crossRefLabel={label}
-                crossRefHref={href}
-              />
-            );
-          })}
-        </div>
       </main>
       <SiteFooter />
     </>

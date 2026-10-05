@@ -12,7 +12,7 @@ export default function HistoryPage() {
     <>
       <Masthead active="history" />
       <main className="page-main">
-        <PageHeader notifNumber={meta.number} title={meta.title} dek={meta.dek} />
+        <PageHeader notifNumber={meta.number} title={meta.title} dek={meta.dek} image="/hero-image.jpg" />
         <div className="clause-list">
           {historyClauses.map((c) => (
             <ClauseEntry key={c.id} clause={c} citations={historyCitations} />

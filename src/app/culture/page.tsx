@@ -12,7 +12,7 @@ export default function CulturePage() {
     <>
       <Masthead active="culture" />
       <main className="page-main">
-        <PageHeader notifNumber={meta.number} title={meta.title} dek={meta.dek} />
+        <PageHeader notifNumber={meta.number} title={meta.title} dek={meta.dek} image="/hero-5.jpg" />
         <div className="clause-list">
           {cultureClauses.map((c) => (
             <ClauseEntry key={c.id} clause={c} citations={cultureCitations} />

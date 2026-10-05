@@ -22,7 +22,7 @@ export default function ControversiesPage() {
     <>
       <Masthead active="controversies" />
       <main className="page-main">
-        <PageHeader notifNumber={meta.number} title={meta.title} dek={meta.dek} />
+        <PageHeader notifNumber={meta.number} title={meta.title} dek={meta.dek} image="/hero-2.jpg" />
         <AggregateStamp
           count={withVerification}
           of={controversyClauses.length}

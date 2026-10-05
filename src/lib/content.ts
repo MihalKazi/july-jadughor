@@ -15,6 +15,7 @@ export interface SectionMeta {
   slug: string;
   number: string;
   title: Bi;
+  short: Bi;
   dek: Bi;
 }
 
@@ -23,6 +24,7 @@ export const SECTIONS: SectionMeta[] = [
     slug: "",
     number: "০",
     title: { bn: "হোম", en: "Home" },
+    short: { bn: "হোম", en: "Home" },
     dek: {
       bn: "সংরক্ষণাগার পরিচিতি",
       en: "Archive overview",
@@ -31,7 +33,8 @@ export const SECTIONS: SectionMeta[] = [
   {
     slug: "history",
     number: "১",
-    title: { bn: "যাদুঘরের ইতিহাস", en: "Museum History" },
+    title: { bn: "জুলাই যাদুঘরের নিচের কথা", en: "Beneath the July Museum" },
+    short: { bn: "ইতিহাস", en: "History" },
     dek: {
       bn: "যাদুঘর নির্মাণের সরকারি বিবরণ",
       en: "The documented account of the museum's founding",
@@ -40,7 +43,8 @@ export const SECTIONS: SectionMeta[] = [
   {
     slug: "controversies",
     number: "২",
-    title: { bn: "বিতর্ক ও অভিযোগ", en: "Controversies & Complaints" },
+    title: { bn: "জুলাই যাদুঘর নিয়ে যত আলোচনা সমালোচনা", en: "All Discussion & Criticism of the July Museum" },
+    short: { bn: "বিতর্ক", en: "Controversies" },
     dek: {
       bn: "প্রকাশিত অভিযোগসমূহ",
       en: "Allegations published against the museum and its officials",
@@ -49,7 +53,8 @@ export const SECTIONS: SectionMeta[] = [
   {
     slug: "verification",
     number: "৩",
-    title: { bn: "যাচাই প্রতিবেদন", en: "Verification Reports" },
+    title: { bn: "জুলাই গণঅভ্যুথান যাদুঘর সংক্রান্ত", en: "Regarding the July Uprising Museum" },
+    short: { bn: "যাচাই", en: "Verification" },
     dek: {
       bn: "তথ্য-যাচাই ও সংশোধন",
       en: "Fact-checks resolving disputed claims",
@@ -58,7 +63,8 @@ export const SECTIONS: SectionMeta[] = [
   {
     slug: "interviews",
     number: "৪",
-    title: { bn: "সাক্ষাৎকার", en: "Interviews" },
+    title: { bn: "জুলাই যাদুঘর নিয়ে মানুষের কথা", en: "What People Say About the July Museum" },
+    short: { bn: "সাক্ষাৎকার", en: "Interviews" },
     dek: {
       bn: "প্রত্যক্ষদর্শী ও কর্মকর্তাদের বক্তব্য",
       en: "Statements from officials and witnesses",
@@ -68,6 +74,7 @@ export const SECTIONS: SectionMeta[] = [
     slug: "culture",
     number: "৫",
     title: { bn: "সংস্কৃতি নিয়ে অন্যান্য", en: "Other Cultural Topics" },
+    short: { bn: "সংস্কৃতি", en: "Culture" },
     dek: {
       bn: "সাংস্কৃতিক প্রবন্ধ ও আলোচনা",
       en: "Cultural essays and discourse",
