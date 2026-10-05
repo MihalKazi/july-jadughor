@@ -1,0 +1,40 @@
+{
+  "title": "Choose the visual world — July Uprising themed",
+  "question": "The roll assigned Candlelight Vigil / Prodip Memorial — the museum's own subject as its visual world. Lock it, take the pick, or re-roll.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Candlelight Vigil (Prodip Memorial)",
+      "kicker": "THE ROLL",
+      "lineage": "Bengali memorial vigil — clay prodip lamps lit for the dead",
+      "thesis": "The archive holds vigil for its own subject: every clause lit like a lamp, not printed like a notice or sprayed like a slogan.",
+      "palette": ["#0e1a2e", "#f0a940", "#d97b1f", "#1c2b45", "#fbe3ae"],
+      "materials": ["deep dusk-blue ground", "warm amber flame glow", "soft radial bloom", "unglazed clay lamp motif"],
+      "viewport": "Full-bleed dusk-blue hero, glowing amber Bengali nameplate with soft bloom, a loose hand-scattered constellation of small lit-lamp icons above the title, six sections as individually glowing lamp-entries in an organic vigil arrangement, not a grid.",
+      "risk": "Reads morose/heavy if the amber glow isn't kept warm and the layout stays too rigid — needs handmade variance, not a clean grid, to earn the vigil feeling.",
+      "raised": [
+        { "from": "declined: cutting-bench-select-rail", "raise": "Verification state renders as flame behavior — steady lit (verified), flickering (disputed), unlit wick (referred) — never a color swap, keeping the no-color-coded-judgment rule native to this world instead of borrowed." }
+      ]
+    },
+    {
+      "id": "model-pick",
+      "label": "Shaheed Minar Memorial Epigraphy",
+      "kicker": "IMPECCABLE'S PICK",
+      "lineage": "National martyr monument — official memorial register, stone/marble inscription",
+      "thesis": "The archive reads like inscription on the monument itself — formal, permanent, carved.",
+      "palette": ["#e8e5dc", "#2b2b28", "#8c1f1f"],
+      "materials": ["marble/stone texture", "carved inscription", "wreath-laying convention"],
+      "risk": "The most official, expected choice for a martyr-memorial museum — dignified but safe, and possibly too monumental/cold for a bilingual reading archive.",
+      "viewport": "Stone-textured panels with carved-inscription headlines and formal wreath/laurel corner marks."
+    }
+  ],
+  "canonCard": {
+    "id": "canon",
+    "label": "Conventional Archive Page",
+    "kicker": "STANDING EXIT",
+    "lineage": "generic documentation/wiki list layout",
+    "thesis": "Plain neutral list of sections and clauses — the safe, unstyled category default.",
+    "palette": ["#ffffff", "#111111", "#666666"],
+    "risk": "This is what most AI-built archive sites already look like — the thing you asked to move away from."
+  }
+}
